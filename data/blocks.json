@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "blocks": [
+    { "id": 0, "name": "air", "solid": false, "transparent": true },
+    { "id": 1, "name": "cobblestone", "solid": true, "transparent": false, "color": "#6f7a82" },
+    { "id": 2, "name": "brick", "solid": true, "transparent": false, "color": "#836756" },
+    { "id": 3, "name": "stucco_white", "solid": true, "transparent": false, "color": "#d9d2c4" },
+    { "id": 4, "name": "stucco_blue", "solid": true, "transparent": false, "color": "#6ea6bb" },
+    { "id": 5, "name": "stucco_pink", "solid": true, "transparent": false, "color": "#e0a08d" },
+    { "id": 6, "name": "stucco_yellow", "solid": true, "transparent": false, "color": "#dabf6f" },
+    { "id": 7, "name": "terracotta_tile", "solid": true, "transparent": false, "color": "#aa633f" },
+    { "id": 8, "name": "wood_dark", "solid": true, "transparent": false, "color": "#4f3629" },
+    { "id": 9, "name": "iron_grate", "solid": true, "transparent": true, "color": "#707478" },
+    { "id": 10, "name": "water", "solid": false, "transparent": true, "color": "#3e7ba1" },
+    { "id": 11, "name": "sand", "solid": true, "transparent": false, "color": "#c3b278" },
+    { "id": 12, "name": "palm_trunk", "solid": true, "transparent": false, "color": "#74553a" },
+    { "id": 13, "name": "palm_leaves", "solid": false, "transparent": true, "color": "#4b8f52" }
+  ]
+}

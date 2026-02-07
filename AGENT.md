@@ -1,77 +1,55 @@
 # Agent Context & Memory
 
-> This file tracks the AI agent's current state, decisions, and pending work.
-
----
-
 ## Current Focus
-- ✅ Project initialization and planning phase complete
-- ⏳ Awaiting user review of planning documents
 
----
+- Core playable prototype implemented
+- Next focus: polish, save/load, deployment
 
-## Key Decisions
+## Implemented in This Session
 
-### 1. Technology Stack
-- **Rendering**: Three.js (WebGL) - browser-based, no installation required
-- **Build Tool**: Vite - fast HMR, modern bundling
-- **Physics**: Cannon.js - lightweight physics engine
-- **Audio**: Howler.js - cross-browser audio
+### Architecture and Runtime
+- Vite browser entry (`index.html`, `src/main.js`, `style.css`)
+- Chunked voxel world pipeline
+- Dynamic chunk streaming around player
+- Face-culled mesh generation for opaque and transparent blocks
 
-### 2. Architecture Pattern
-- Voxel engine with chunk-based world management
-- First-person camera with WASD + mouse controls
-- Distance-based chunk loading/unloading
+### Gameplay
+- First-person controls (WASD, mouse look, sprint, jump)
+- Pointer lock onboarding flow
+- Voxel collision detection
+- Landmark plaque interactions (`E` pin/unpin)
 
-### 3. Scope
-- Focus on exploration rather than survival/crafting mechanics
-- Educational elements (historic information at landmarks)
-- Web-based for accessibility
+### World Content
+- Terrain generation with island-style height mask
+- Landmark layout for:
+  - El Morro
+  - San Juan Cathedral
+  - La Fortaleza
+  - Puerta de San Juan
+  - Paseo de la Princesa
+- Colonial house rows, roads, palms, and walls
 
----
+### Environment and Audio
+- Day/night lighting and sky transition
+- Procedural ambient ocean loop
+- Night coqui chirps
+- Procedural footsteps
 
-## Active Task
-**Planning Phase - Awaiting User Approval**
+## Data Files Added
 
-Created artifacts:
-- `docs/implementation_plan.md` ✅
-- `docs/task.md` ✅
-- `docs/architecture_overview.md` ✅
-- `docs/data_contract.md` ✅
-- `README.md` ✅
-- `AGENT.md` ✅
+- `data/blocks.json`
+- `data/structures/landmarks.json`
 
----
+## Known Gaps
 
-## Pending User Input
+- No persistent world save/load yet
+- No NPC guides yet
+- No minimap/settings menu yet
+- No deployment config yet
 
-> [!IMPORTANT]
-> Review required before proceeding to implementation:
-> 1. Technology stack confirmation (Three.js vs alternatives)
-> 2. Scope clarification (multiplayer? survival mechanics?)
-> 3. Landmark priority list
-> 4. Any additional requirements
+## Recommended Next Steps
 
----
-
-## Git Status
-- Repository: `https://github.com/gex82/minecraft_old_SJU.git`
-- Branch: `main`
-- Last commit: Initial scaffolding and documentation
-
----
-
-## Next Steps (After Approval)
-1. Initialize Vite + Three.js project
-2. Create basic voxel renderer
-3. Implement camera controls
-4. Design Old San Juan block palette
-5. Build first landmark (El Morro)
-
----
-
-## Session Log
-
-| Date | Action | Notes |
-|------|--------|-------|
-| 2026-02-07 | Project created | Scaffolding and planning docs |
+1. Add save/load for modified chunks and player state
+2. Add settings UI for render distance and audio volume
+3. Add lightweight minimap and landmark index
+4. Prepare production deployment target (GitHub Pages or static host)

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft Old San Juan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Manrope:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div id="game-root"></div>
+
+      <div id="crosshair" aria-hidden="true"></div>
+
+      <section id="hud" aria-live="polite">
+        <div id="hud-title">Old San Juan Voxel Explorer</div>
+        <div id="hud-stats">Initializing...</div>
+      </section>
+
+      <section id="landmark-panel" class="hidden" aria-live="polite">
+        <h2 id="landmark-name">Landmark</h2>
+        <p id="landmark-description"></p>
+        <div id="landmark-hint">Press E to pin or clear this plaque</div>
+      </section>
+
+      <section id="start-overlay">
+        <div class="overlay-card">
+          <h1>Minecraft Old San Juan</h1>
+          <p>
+            Explore a voxel recreation of Old San Juan with first-person controls,
+            dynamic chunk loading, day/night cycle, and landmark plaques.
+          </p>
+          <ul>
+            <li><strong>Move:</strong> W A S D</li>
+            <li><strong>Look:</strong> Mouse</li>
+            <li><strong>Jump:</strong> Space</li>
+            <li><strong>Inspect plaque:</strong> E</li>
+          </ul>
+          <button id="start-button" type="button">Enter City</button>
+        </div>
+      </section>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

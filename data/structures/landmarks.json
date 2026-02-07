@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "landmarks": [
+    {
+      "id": "el-morro",
+      "name": "Castillo San Felipe del Morro",
+      "description": "16th-century fortress guarding the entrance to San Juan Bay.",
+      "position": { "x": -60, "y": 24, "z": -15 }
+    },
+    {
+      "id": "san-juan-cathedral",
+      "name": "San Juan Cathedral",
+      "description": "One of the oldest cathedrals in the Americas.",
+      "position": { "x": 30, "y": 22, "z": 34 }
+    },
+    {
+      "id": "la-fortaleza",
+      "name": "La Fortaleza",
+      "description": "Historic governor residence and UNESCO World Heritage Site.",
+      "position": { "x": 52, "y": 20, "z": -2 }
+    },
+    {
+      "id": "puerta-san-juan",
+      "name": "Puerta de San Juan",
+      "description": "Original city gate that connected the old city to the harbor.",
+      "position": { "x": 2, "y": 16, "z": -35 }
+    },
+    {
+      "id": "paseo-princesa",
+      "name": "Paseo de la Princesa",
+      "description": "Historic waterfront promenade along San Juan Bay.",
+      "position": { "x": 20, "y": 14, "z": -41 }
+    }
+  ]
+}
