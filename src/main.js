@@ -1,11 +1,13 @@
 import * as THREE from "three";
 
 import { createDefaultBlockRegistry } from "./engine/BlockRegistry.js";
-import { CHUNK_SIZE, LOAD_RADIUS } from "./engine/constants.js";
+import { CHUNK_SIZE } from "./engine/constants.js";
 import { VoxelEngine } from "./engine/VoxelEngine.js";
 import { AudioManager } from "./game/Audio.js";
 import { DayNightCycle } from "./game/DayNight.js";
+import { Minimap } from "./game/Minimap.js";
 import { PlayerController } from "./game/Player.js";
+import { settings } from "./game/Settings.js";
 import { WorldManager } from "./world/WorldManager.js";
 
 const root = document.getElementById("game-root");
@@ -16,6 +18,20 @@ const landmarkDescription = document.getElementById("landmark-description");
 const landmarkHint = document.getElementById("landmark-hint");
 const startOverlay = document.getElementById("start-overlay");
 const startButton = document.getElementById("start-button");
+
+// Settings panel elements
+const settingsPanel = document.getElementById("settings-panel");
+const renderDistanceSlider = document.getElementById("render-distance-slider");
+const renderDistanceValue = document.getElementById("render-distance-value");
+const masterVolumeSlider = document.getElementById("master-volume-slider");
+const masterVolumeValue = document.getElementById("master-volume-value");
+const musicVolumeSlider = document.getElementById("music-volume-slider");
+const musicVolumeValue = document.getElementById("music-volume-value");
+const showFpsCheckbox = document.getElementById("show-fps-checkbox");
+const showMinimapCheckbox = document.getElementById("show-minimap-checkbox");
+const settingsResetBtn = document.getElementById("settings-reset");
+const settingsCloseBtn = document.getElementById("settings-close");
+const hud = document.getElementById("hud");
 
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
@@ -34,13 +50,18 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 camera.position.set(8, 15.6, 8);
 
 const blockRegistry = createDefaultBlockRegistry();
-const worldManager = new WorldManager(blockRegistry, { loadRadius: LOAD_RADIUS });
+const worldManager = new WorldManager(blockRegistry, { loadRadius: settings.get("renderDistance") });
 const voxelEngine = new VoxelEngine(scene, worldManager, blockRegistry);
 worldManager.attachEngine(voxelEngine);
 
 const player = new PlayerController(camera, renderer.domElement, new THREE.Vector3(8, 14, 8));
 const dayNight = new DayNightCycle(scene);
 const audio = new AudioManager();
+
+// Minimap
+const minimapCanvas = document.getElementById("minimap");
+const minimap = new Minimap(minimapCanvas, worldManager);
+minimap.setVisible(settings.get("showMinimap"));
 
 worldManager.update(player.position);
 
@@ -123,6 +144,7 @@ function animate(now) {
 
   updateHud(deltaSeconds);
   resolveLandmarkDisplay();
+  minimap.update(player.position, player.yaw);
 
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
@@ -153,6 +175,85 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+// Settings panel logic
+let settingsOpen = false;
+
+function openSettings() {
+  settingsOpen = true;
+  settingsPanel.classList.remove("hidden");
+  document.exitPointerLock();
+}
+
+function closeSettings() {
+  settingsOpen = false;
+  settingsPanel.classList.add("hidden");
+}
+
+function syncSettingsUI() {
+  renderDistanceSlider.value = settings.get("renderDistance");
+  renderDistanceValue.textContent = settings.get("renderDistance");
+  masterVolumeSlider.value = settings.get("masterVolume");
+  masterVolumeValue.textContent = `${settings.get("masterVolume")}%`;
+  musicVolumeSlider.value = settings.get("musicVolume");
+  musicVolumeValue.textContent = `${settings.get("musicVolume")}%`;
+  showFpsCheckbox.checked = settings.get("showFps");
+  showMinimapCheckbox.checked = settings.get("showMinimap");
+  hud.style.display = settings.get("showFps") ? "" : "none";
+}
+
+renderDistanceSlider.addEventListener("input", (e) => {
+  const val = parseInt(e.target.value, 10);
+  settings.set("renderDistance", val);
+  renderDistanceValue.textContent = val;
+  worldManager.setLoadRadius(val);
+});
+
+masterVolumeSlider.addEventListener("input", (e) => {
+  const val = parseInt(e.target.value, 10);
+  settings.set("masterVolume", val);
+  masterVolumeValue.textContent = `${val}%`;
+  audio.setMasterVolume(val / 100);
+});
+
+musicVolumeSlider.addEventListener("input", (e) => {
+  const val = parseInt(e.target.value, 10);
+  settings.set("musicVolume", val);
+  musicVolumeValue.textContent = `${val}%`;
+});
+
+showFpsCheckbox.addEventListener("change", (e) => {
+  settings.set("showFps", e.target.checked);
+  hud.style.display = e.target.checked ? "" : "none";
+});
+
+showMinimapCheckbox.addEventListener("change", (e) => {
+  settings.set("showMinimap", e.target.checked);
+  minimap.setVisible(e.target.checked);
+});
+
+settingsResetBtn.addEventListener("click", () => {
+  settings.reset();
+  syncSettingsUI();
+  worldManager.setLoadRadius(settings.get("renderDistance"));
+  audio.setMasterVolume(settings.get("masterVolume") / 100);
+});
+
+settingsCloseBtn.addEventListener("click", closeSettings);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if (settingsOpen) {
+      closeSettings();
+    } else if (document.pointerLockElement === renderer.domElement) {
+      openSettings();
+    }
+  }
+});
+
+// Initialize settings UI and apply saved values
+syncSettingsUI();
+audio.setMasterVolume(settings.get("masterVolume") / 100);
 
 syncOverlay();
 requestAnimationFrame(animate);

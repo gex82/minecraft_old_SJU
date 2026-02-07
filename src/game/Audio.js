@@ -140,4 +140,10 @@ export class AudioManager {
     osc.start(now);
     osc.stop(now + 0.22);
   }
+
+  setMasterVolume(value) {
+    if (this.masterGain) {
+      this.masterGain.gain.linearRampToValueAtTime(value * 0.2, this.ctx.currentTime + 0.05);
+    }
+  }
 }

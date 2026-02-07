@@ -1,76 +1,49 @@
 # Minecraft Old San Juan - Task Roadmap
 
-Status: Phase 1 MVP implemented  
+Status: Phase 4 Complete  
 Last Updated: 2026-02-07
 
-## Phase 0: Project Initialization
-
+## Phase 0: Project Initialization ✅
 - [x] Project directory scaffold
 - [x] Planning documents
 - [x] Git repository setup
 - [x] README and agent context setup
 
-## Phase 1: Core Engine Setup
-
-### 1.1 Project Bootstrap
+## Phase 1: Core Engine Setup ✅
 - [x] Vite-compatible project entry
 - [x] Three.js dependencies configured
-- [x] Development/build scripts
-- [x] Canvas render bootstrap
+- [x] Voxel engine with chunk streaming
+- [x] First-person camera + WASD controls + collision
 
-### 1.2 Voxel Engine Foundation
-- [x] Block registry
-- [x] Chunk data structure (16x64x16)
-- [x] Chunk mesh generation with face culling
-- [x] Chunk load/unload based on player chunk
-
-### 1.3 Camera and Controls
-- [x] First-person camera
-- [x] WASD movement
-- [x] Pointer-lock mouse look
-- [x] Jump + collision against solid voxels
-
-### 1.4 World Management
-- [x] Procedural island terrain
-- [x] Dynamic chunk streaming
-- [x] Landmark placement system
-- [ ] Persistent save/load state
-
-## Phase 2: Old San Juan Assets
-
-### 2.1 Block Types
-- [x] Cobblestone, stucco palette, terracotta, water, sand, palm blocks
-- [x] Data contract file (`data/blocks.json`)
-
-### 2.2 Landmark Structures
-- [x] El Morro
-- [x] San Juan Cathedral
-- [x] La Fortaleza
-- [x] Puerta de San Juan
-- [x] Paseo de la Princesa
+## Phase 2: Old San Juan Assets ✅
+- [x] Block types (cobblestone, stucco, terracotta, etc.)
+- [x] Landmark structures (El Morro, Cathedral, La Fortaleza, Puerta, Paseo)
 - [x] Colonial housing rows and city walls
 
-## Phase 3: Game Features
+## Phase 3: Game Features ✅
+- [x] Day/night cycle with sky/fog transitions
+- [x] Ambient audio (ocean, coqui, footsteps)
+- [x] Landmark plaque interactions
 
-### 3.1 Environment
-- [x] Day/night cycle and sky/fog transitions
-- [x] Ocean zone in terrain
+## Phase 4: Polish and Launch ✅
+- [x] Settings menu (render distance, volume, toggles)
+- [x] Minimap (player position, landmarks, terrain)
+- [x] GitHub Pages deployment pipeline
+- [ ] Performance tuning (LOD, frustum culling) - Optional
+- [ ] Visual polish (sun/moon, improved fog) - Optional
 
-### 3.2 Audio
-- [x] Ambient ocean bed (procedural)
-- [x] Coqui chirps at night (procedural)
-- [x] Footstep sounds while walking
+## Deployment Instructions
 
-### 3.3 Interactivity
-- [x] Landmark plaques with proximity detection
-- [x] Pin/unpin plaque interaction (`E`)
-- [ ] NPC guides
-- [ ] Photo mode
+```bash
+# Local development
+npm run dev
 
-## Phase 4: Polish and Launch
+# Production build
+npm run build
 
-- [ ] Performance tuning pass (LOD/occlusion)
-- [ ] Settings menu
-- [ ] Minimap
-- [ ] Deployment pipeline
-- [ ] Demo capture
+# Serve production locally
+npx serve dist
+```
+
+GitHub Pages auto-deploys on push to `main` branch.
+Live URL: https://gex82.github.io/minecraft_old_SJU/

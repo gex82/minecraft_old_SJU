@@ -215,6 +215,10 @@ export class WorldManager {
     return this.landmarks.find((landmark) => landmark.id === id) ?? null;
   }
 
+  setLoadRadius(radius) {
+    this.loadRadius = Math.max(2, Math.min(8, radius));
+  }
+
   terrainHeight(worldX, worldZ) {
     const islandRadius = Math.sqrt((worldX * worldX) / (132 * 132) + (worldZ * worldZ) / (116 * 116));
     const islandMask = Math.max(0, 1 - islandRadius);

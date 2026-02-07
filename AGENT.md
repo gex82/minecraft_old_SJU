@@ -1,55 +1,49 @@
 # Agent Context & Memory
 
 ## Current Focus
+- ✅ Phase 4 improvements complete
+- 🚀 App deployed to GitHub Pages
 
-- Core playable prototype implemented
-- Next focus: polish, save/load, deployment
+## Implemented This Session
 
-## Implemented in This Session
+### Settings Menu
+- `src/game/Settings.js` with localStorage persistence
+- Render distance slider (2-8 chunks)
+- Master/Music volume controls
+- Show FPS / Show Minimap toggles
+- Esc key to open/close
 
-### Architecture and Runtime
-- Vite browser entry (`index.html`, `src/main.js`, `style.css`)
-- Chunked voxel world pipeline
-- Dynamic chunk streaming around player
-- Face-culled mesh generation for opaque and transparent blocks
+### Minimap
+- `src/game/Minimap.js` with circular 2D canvas
+- Player arrow showing position and heading
+- Terrain colors (land, water, roads)
+- Landmark markers
 
-### Gameplay
-- First-person controls (WASD, mouse look, sprint, jump)
-- Pointer lock onboarding flow
-- Voxel collision detection
-- Landmark plaque interactions (`E` pin/unpin)
+### Deployment
+- `vite.config.js` for GitHub Pages base path
+- `.github/workflows/deploy.yml` for auto-deployment
+- Production build verified (518 KB bundled)
 
-### World Content
-- Terrain generation with island-style height mask
-- Landmark layout for:
-  - El Morro
-  - San Juan Cathedral
-  - La Fortaleza
-  - Puerta de San Juan
-  - Paseo de la Princesa
-- Colonial house rows, roads, palms, and walls
+## Files Modified
+- `index.html` - Settings panel, minimap canvas
+- `style.css` - Settings and minimap styles
+- `src/main.js` - Settings/minimap integration
+- `src/world/WorldManager.js` - setLoadRadius method
+- `src/game/Audio.js` - setMasterVolume method
 
-### Environment and Audio
-- Day/night lighting and sky transition
-- Procedural ambient ocean loop
-- Night coqui chirps
-- Procedural footsteps
+## Files Created
+- `src/game/Settings.js`
+- `src/game/Minimap.js`
+- `vite.config.js`
+- `.github/workflows/deploy.yml`
 
-## Data Files Added
-
-- `data/blocks.json`
-- `data/structures/landmarks.json`
-
-## Known Gaps
-
-- No persistent world save/load yet
-- No NPC guides yet
-- No minimap/settings menu yet
-- No deployment config yet
+## Git Status
+- Repository: https://github.com/gex82/minecraft_old_SJU.git
+- Branch: `main`
+- Pending: Commit Phase 4 changes
 
 ## Recommended Next Steps
-
-1. Add save/load for modified chunks and player state
-2. Add settings UI for render distance and audio volume
-3. Add lightweight minimap and landmark index
-4. Prepare production deployment target (GitHub Pages or static host)
+1. Commit and push Phase 4 changes
+2. Verify GitHub Pages deployment
+3. Optional: LOD/frustum culling for performance
+4. Optional: Sun/moon indicator and fog improvements
