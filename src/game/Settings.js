@@ -13,6 +13,24 @@ const DEFAULTS = {
   showMinimap: true,
 };
 
+function clampInt(value, min, max, fallback) {
+  const parsed = Number.parseInt(value, 10);
+  if (Number.isNaN(parsed)) {
+    return fallback;
+  }
+  return Math.max(min, Math.min(max, parsed));
+}
+
+function sanitize(rawValues) {
+  return {
+    renderDistance: clampInt(rawValues.renderDistance, 2, 8, DEFAULTS.renderDistance),
+    masterVolume: clampInt(rawValues.masterVolume, 0, 100, DEFAULTS.masterVolume),
+    musicVolume: clampInt(rawValues.musicVolume, 0, 100, DEFAULTS.musicVolume),
+    showFps: Boolean(rawValues.showFps),
+    showMinimap: Boolean(rawValues.showMinimap),
+  };
+}
+
 class Settings {
   constructor() {
     this.values = { ...DEFAULTS };
@@ -25,7 +43,7 @@ class Settings {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
-        this.values = { ...DEFAULTS, ...parsed };
+        this.values = sanitize({ ...DEFAULTS, ...parsed });
       }
     } catch (e) {
       console.warn("Failed to load settings:", e);
@@ -45,10 +63,12 @@ class Settings {
   }
 
   set(key, value) {
-    if (this.values[key] !== value) {
-      this.values[key] = value;
+    const nextValues = sanitize({ ...this.values, [key]: value });
+    const nextValue = nextValues[key];
+    if (this.values[key] !== nextValue) {
+      this.values[key] = nextValue;
       this.save();
-      this.notifyListeners(key, value);
+      this.notifyListeners(key, nextValue);
     }
   }
 

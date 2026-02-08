@@ -1,49 +1,34 @@
 # Agent Context & Memory
 
 ## Current Focus
-- ✅ Phase 4 improvements complete
-- 🚀 App deployed to GitHub Pages
+- Stabilize Phase 4 runtime polish and settings behavior
+- Keep docs aligned with implemented files
 
-## Implemented This Session
+## Implemented State
 
-### Settings Menu
-- `src/game/Settings.js` with localStorage persistence
-- Render distance slider (2-8 chunks)
-- Master/Music volume controls
-- Show FPS / Show Minimap toggles
-- Esc key to open/close
+### Core Systems
+- Chunked voxel world rendering with dynamic chunk loading
+- First-person movement and collision
+- Day/night lighting and fog transitions
+- Landmark placement and plaque interaction
 
-### Minimap
-- `src/game/Minimap.js` with circular 2D canvas
-- Player arrow showing position and heading
-- Terrain colors (land, water, roads)
-- Landmark markers
+### UI and Utility
+- Settings panel with localStorage persistence
+- Circular minimap with player heading and landmark markers
+- HUD stats and start overlay
 
 ### Deployment
-- `vite.config.js` for GitHub Pages base path
-- `.github/workflows/deploy.yml` for auto-deployment
-- Production build verified (518 KB bundled)
+- Vite config for GitHub Pages base path
+- GitHub Actions workflow for Pages deployment
 
-## Files Modified
-- `index.html` - Settings panel, minimap canvas
-- `style.css` - Settings and minimap styles
-- `src/main.js` - Settings/minimap integration
-- `src/world/WorldManager.js` - setLoadRadius method
-- `src/game/Audio.js` - setMasterVolume method
-
-## Files Created
-- `src/game/Settings.js`
-- `src/game/Minimap.js`
-- `vite.config.js`
-- `.github/workflows/deploy.yml`
-
-## Git Status
-- Repository: https://github.com/gex82/minecraft_old_SJU.git
-- Branch: `main`
-- Pending: Commit Phase 4 changes
+## Recent Fixes
+- Applied saved audio settings correctly after audio context unlock
+- Wired `musicVolume` setting to ambient audio gain
+- Corrected minimap heading rotation to match player facing direction
+- Added settings value sanitization and clamping
+- Updated `docs/implementation_plan.md` to match actual file layout and status
 
 ## Recommended Next Steps
-1. Commit and push Phase 4 changes
-2. Verify GitHub Pages deployment
-3. Optional: LOD/frustum culling for performance
-4. Optional: Sun/moon indicator and fog improvements
+1. Add save/load support for player state and modified chunks
+2. Batch chunk mesh rebuilds to reduce frame spikes at higher render distance
+3. Add optional feature work (NPC guides, photo mode)

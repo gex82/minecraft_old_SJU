@@ -10,6 +10,8 @@ Playable prototype complete:
 - Day/night lighting cycle
 - Ambient procedural audio (ocean + coqui chirps + footsteps)
 - Landmark plaques for El Morro, La Fortaleza, San Juan Cathedral, Paseo, and Puerta de San Juan
+- Settings panel with persisted preferences
+- Circular minimap with landmark markers
 
 ## Tech Stack
 
@@ -34,7 +36,7 @@ Open `http://localhost:5173`.
 - `Space`: Jump
 - `Shift`: Sprint
 - `E`: Pin/clear landmark plaque
-- `Esc`: Unlock pointer
+- `Esc`: Open/close settings while in-game
 
 ## Project Structure
 

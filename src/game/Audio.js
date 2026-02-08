@@ -1,15 +1,22 @@
 import { Howler } from "howler";
 
+function clamp01(value) {
+  return Math.max(0, Math.min(1, value));
+}
+
 export class AudioManager {
   constructor() {
     this.ctx = null;
     this.masterGain = null;
+    this.ambientGain = null;
     this.oceanGain = null;
     this.oceanSource = null;
 
     this.initialized = false;
     this.nextCoqui = 0;
     this.footstepAccumulator = 0;
+    this.masterVolume = 1;
+    this.musicVolume = 0.5;
   }
 
   async unlock() {
@@ -17,6 +24,8 @@ export class AudioManager {
       if (this.ctx.state === "suspended") {
         await this.ctx.resume();
       }
+      this.setMasterVolume(this.masterVolume);
+      this.setMusicVolume(this.musicVolume);
       return;
     }
 
@@ -24,12 +33,16 @@ export class AudioManager {
     await this.ctx.resume();
 
     this.masterGain = this.ctx.createGain();
-    this.masterGain.gain.value = 0.2;
+    this.masterGain.gain.value = this.masterVolume * 0.2;
     this.masterGain.connect(this.ctx.destination);
+
+    this.ambientGain = this.ctx.createGain();
+    this.ambientGain.gain.value = this.musicVolume;
+    this.ambientGain.connect(this.masterGain);
 
     this.oceanGain = this.ctx.createGain();
     this.oceanGain.gain.value = 0.012;
-    this.oceanGain.connect(this.masterGain);
+    this.oceanGain.connect(this.ambientGain);
 
     this.startOceanBed();
     this.initialized = true;
@@ -136,14 +149,25 @@ export class AudioManager {
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.19);
 
     osc.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.ambientGain ?? this.masterGain);
     osc.start(now);
     osc.stop(now + 0.22);
   }
 
   setMasterVolume(value) {
+    this.masterVolume = clamp01(value);
     if (this.masterGain) {
-      this.masterGain.gain.linearRampToValueAtTime(value * 0.2, this.ctx.currentTime + 0.05);
+      this.masterGain.gain.linearRampToValueAtTime(
+        this.masterVolume * 0.2,
+        this.ctx.currentTime + 0.05,
+      );
+    }
+  }
+
+  setMusicVolume(value) {
+    this.musicVolume = clamp01(value);
+    if (this.ambientGain) {
+      this.ambientGain.gain.linearRampToValueAtTime(this.musicVolume, this.ctx.currentTime + 0.05);
     }
   }
 }

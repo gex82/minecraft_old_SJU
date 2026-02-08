@@ -54,7 +54,6 @@ export class Minimap {
         ctx.clip();
 
         // Draw terrain (simplified grid)
-        const worldRadius = (this.size / 2) * this.scale;
         const step = 8;
 
         for (let px = 0; px < this.size; px += step) {
@@ -101,7 +100,7 @@ export class Minimap {
         ctx.restore();
 
         // Draw player arrow in center
-        this.drawPlayerArrow(centerX, centerY, playerRotationY);
+        this.drawPlayerArrow(centerX, centerY, playerRotationY + Math.PI);
 
         // Draw border
         ctx.strokeStyle = "rgba(244, 236, 221, 0.4)";

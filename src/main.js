@@ -152,7 +152,7 @@ function animate(now) {
 
 function syncOverlay() {
   const active = document.pointerLockElement === renderer.domElement;
-  startOverlay.classList.toggle("hidden", active);
+  startOverlay.classList.toggle("hidden", active || settingsOpen);
   if (active) {
     audio.unlock();
   }
@@ -180,14 +180,22 @@ window.addEventListener("resize", () => {
 let settingsOpen = false;
 
 function openSettings() {
+  if (settingsOpen) {
+    return;
+  }
   settingsOpen = true;
   settingsPanel.classList.remove("hidden");
   document.exitPointerLock();
+  syncOverlay();
 }
 
 function closeSettings() {
+  if (!settingsOpen) {
+    return;
+  }
   settingsOpen = false;
   settingsPanel.classList.add("hidden");
+  syncOverlay();
 }
 
 function syncSettingsUI() {
@@ -220,6 +228,7 @@ musicVolumeSlider.addEventListener("input", (e) => {
   const val = parseInt(e.target.value, 10);
   settings.set("musicVolume", val);
   musicVolumeValue.textContent = `${val}%`;
+  audio.setMusicVolume(val / 100);
 });
 
 showFpsCheckbox.addEventListener("change", (e) => {
@@ -237,6 +246,7 @@ settingsResetBtn.addEventListener("click", () => {
   syncSettingsUI();
   worldManager.setLoadRadius(settings.get("renderDistance"));
   audio.setMasterVolume(settings.get("masterVolume") / 100);
+  audio.setMusicVolume(settings.get("musicVolume") / 100);
 });
 
 settingsCloseBtn.addEventListener("click", closeSettings);
@@ -254,6 +264,7 @@ document.addEventListener("keydown", (e) => {
 // Initialize settings UI and apply saved values
 syncSettingsUI();
 audio.setMasterVolume(settings.get("masterVolume") / 100);
+audio.setMusicVolume(settings.get("musicVolume") / 100);
 
 syncOverlay();
 requestAnimationFrame(animate);
